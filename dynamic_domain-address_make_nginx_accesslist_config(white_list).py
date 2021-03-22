@@ -62,7 +62,7 @@ def main():
         for r_line in r_file_lines:
             #r_line="www.163.com#1.2.4.5#A#216.58.197.196#Annotation"
             DNS_query_info=str(r_line).split('#')
-            DNS_query_info[3]=DNS_query_info[3].replace('\n', '').replace('\r', '')
+            DNS_query_info[-1]=DNS_query_info[-1].replace('\n', '').replace('\r', '')
             #print("Inf1",DNS_query_info)
             Old_DNS_Answer=DNS_query_info[3].strip()
             New_DNS_Answer=DNS_Query(DNS_query_info[0].strip(),DNS_query_info[1].strip(),DNS_query_info[2].strip(),DNS_Query_Source_Address)
