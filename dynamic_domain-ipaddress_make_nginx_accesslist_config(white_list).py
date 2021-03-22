@@ -20,7 +20,7 @@
 # There is an extra rule at the end of the configuration file "deny all;"
 # And automatically reload the Nginx service "systemctl reload nginx.service"
 
-import sys,dns.resolver,subprocess.Popen
+import sys,dns.resolver,subprocess
 
 def DNS_Query(domain_name,dns_server,domain_type,source_address):
     try:
