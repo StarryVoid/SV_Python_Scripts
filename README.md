@@ -1,5 +1,5 @@
 # NginxAccess_AutoConfig
-Dynamic Domain-IPAddress Make Nginx Access Config (White List)
+Dynamic Domain-IPAddress Make Nginx Accesslist Config (White List)
 
 ## Source
 
