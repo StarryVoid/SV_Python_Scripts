@@ -18,9 +18,9 @@
 # Default Output File ./nginx_access_whitelist.conf
 # One line of the output file is like "Allow 216.58.197.196/32;"
 # There is an extra rule at the end of the configuration file "deny all;"
-#
+# And automatically reload the Nginx service "systemctl reload nginx.service"
 
-import sys,dns.resolver
+import sys,dns.resolver,subprocess.Popen
 
 def DNS_Query(domain_name,dns_server,domain_type,source_address):
     try:
@@ -87,6 +87,7 @@ def main():
                 w_file_output.write("\n".join(Input_tmp_data))
             with open("nginx_access_whitelist.conf", "w+") as w_file_input:
                 w_file_input.write("\n".join(Output_tmp_data))
+            subprocess.Popen('systemctl reload nginx.service',shell=True).returncode
     #
     except Exception as Error:
         print ('[Error]: Some errors have occurred, please check the configuration file.')
