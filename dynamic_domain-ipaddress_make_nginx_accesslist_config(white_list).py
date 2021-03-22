@@ -5,7 +5,7 @@
 #
 # Author: StarryVoid <stars@starryvoid.com>
 # Intro:  https://blog.starryvoid.com/archives/585.html
-# Build:  2021/03/22 Version 1.0.0
+# Build:  2021/03/22 Version 1.0.1
 #
 # Operating environment "Python3 dnspython"
 # Install Command "pip3 install dnspython"
