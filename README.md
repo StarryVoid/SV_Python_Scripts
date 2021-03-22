@@ -1,2 +1,6 @@
 # NginxAccess_AutoConfig
-Dynamic IPAddress Make Nginx Access Config (White List)
+Dynamic Domain-IPAddress Make Nginx Access Config (White List)
+
+## Source
+
+https://blog.starryvoid.com/archives/313.html
