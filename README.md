@@ -3,4 +3,4 @@ Dynamic Domain-IPAddress Make Nginx Access Config (White List)
 
 ## Source
 
-https://blog.starryvoid.com/archives/313.html
+https://blog.starryvoid.com/archives/585.html
