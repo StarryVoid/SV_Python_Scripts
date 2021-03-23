@@ -54,23 +54,6 @@ def DNS_Query(domain_name,dns_server,domain_type,source_address):
         DNS_Response = sorted(answer.split(" ")[4].strip(".").lower() for answer in DNS_Resolver.resolve(str(domain_name),rdtype=str(domain_type),source=source_address).response.answer[-1].to_text().split("\n"))
         return DNS_Response[0]
         #
-        #Other data processing methods 
-        #
-        #DNS_Answer_List=list()
-        #DNS_Answer_List_Rdata = DNS_Resolver.resolve(str(domain_name),str(domain_type))
-        #for rdata in DNS_Answer_List_Rdata:
-        #    DNS_Answer_List.append(str(rdata))                              #IP
-        #    DNS_Answer_List.append(str(rdata.target).strip(".").lower())    #CNAME
-        #return tuple(DNS_Answer_List)
-        #
-        #DNS_Answer_List=tuple()
-        #DNS_Answer_List_RRset = DNS_Resolver.resolve(str(domain_name),str(domain_type))
-        #for rrset in DNS_Answer_List_RRset.response.answer:
-        #    for i in rrset.items:
-        #        print(i.to_text())
-        #        DNS_Answer_List.append(str(i.to_text()).strip(".").lower())
-        #return tuple(DNS_Answer_List)
-        #
     except Exception as Error:
         print (domain_name,domain_type,'Error: unable to start def \"DNS_Query\"')
 
@@ -84,30 +67,21 @@ def main():
             r_file_lines = r_file.readlines()
         #
         for r_line in r_file_lines:
-            #r_line="www.google.com#8.8.8.8#A#216.58.197.196#Annotation"
             DNS_query_info = str(r_line).split('#')
             DNS_query_info[-1] = DNS_query_info[-1].replace('\n', '').replace('\r', '')
-            #print("Inf1",DNS_query_info)
             Old_DNS_Answer=DNS_query_info[3].strip()
             New_DNS_Answer=DNS_Query(DNS_query_info[0].strip(),DNS_query_info[1].strip(),DNS_query_info[2].strip(),DNS_Query_Source_Address)
             if str(New_DNS_Answer) == "None" :
                 New_DNS_Answer=Old_DNS_Answer
-            #print("Inf2",DNS_query_info)
-            #print("Old",Old_DNS_Answer)
-            #print("New",New_DNS_Answer)
             if str(New_DNS_Answer.strip()) != str(Old_DNS_Answer.strip()) :
                 Difference_Status+=1
                 DNS_query_info[3] = str(New_DNS_Answer)
-                #print("Inf3",DNS_query_info)
             Input_tmp_data.append(str("#".join(DNS_query_info)))
             Output_tmp_data.append("allow " + str(New_DNS_Answer) + "/32;")
-            #print(New_DNS_Answer,Old_DNS_Answer,"Num =",Difference_Status)
         Input_tmp_data.append('\n')
         Output_tmp_data.append('deny all;\n')
         #
         if bool(Difference_Status) :
-            #print("O1",Input_tmp_data)
-            #print("O2",Output_tmp_data)
             with open(str(Input_file_path), "w+") as w_file_output:
                 w_file_output.write("\n".join(Input_tmp_data))
             with open(str(Output_file_path), "w+") as w_file_input:
