@@ -5,7 +5,7 @@
 #
 # Author: StarryVoid <stars@starryvoid.com>
 # Intro:  https://blog.starryvoid.com/archives/585.html
-# Build:  2021/03/23 Version 1.1.0
+# Build:  2021/03/23 Version 1.1.1
 #
 # Operating Environment "Python3.6+ dnspython"
 # Install Command "pip3 install dnspython"
@@ -51,7 +51,10 @@ def DNS_Query(domain_name,dns_server,domain_type,source_address):
         DNS_Resolver.timeout = float("1.0")
         DNS_Resolver.lifetime = float("5.0")
         DNS_Resolver.nameservers = list(str(dns_server).split('#'))+list(DNS_Query_Server_Expand)
-        return str(DNS_Resolver.resolve(str(domain_name),rdtype=str(domain_type),source=source_address).response.answer[-1].to_text().split("\n")[0].split(" ")[4])
+        DNS_Response = sorted(answer.split(" ")[4].strip(".").lower() for answer in DNS_Resolver.resolve(str(domain_name),rdtype=str(domain_type),source=source_address).response.answer[-1].to_text().split("\n"))
+        return DNS_Response[0]
+        #
+        #Other data processing methods 
         #
         #DNS_Answer_List=list()
         #DNS_Answer_List_Rdata = DNS_Resolver.resolve(str(domain_name),str(domain_type))
