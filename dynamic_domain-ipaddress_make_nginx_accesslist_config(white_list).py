@@ -5,7 +5,7 @@
 #
 # Author: StarryVoid <stars@starryvoid.com>
 # Intro:  https://blog.starryvoid.com/archives/585.html
-# Build:  2021/03/23 Version 1.1.1
+# Build:  2021/03/23 Version 1.1.1.1
 #
 # Operating Environment "Python3.6+ dnspython"
 # Install Command "pip3 install dnspython"
@@ -76,17 +76,17 @@ def DNS_Query(domain_name,dns_server,domain_type,source_address):
 
 def main():
     try:
-        Input_tmp_data=[]
-        Output_tmp_data=[]
-        Difference_Status=int(0)
+        Input_tmp_data = []
+        Output_tmp_data = []
+        Difference_Status = int(0)
         #
         with open(str(Input_file_path), "r") as r_file:
             r_file_lines = r_file.readlines()
         #
         for r_line in r_file_lines:
             #r_line="www.google.com#8.8.8.8#A#216.58.197.196#Annotation"
-            DNS_query_info=str(r_line).split('#')
-            DNS_query_info[-1]=DNS_query_info[-1].replace('\n', '').replace('\r', '')
+            DNS_query_info = str(r_line).split('#')
+            DNS_query_info[-1] = DNS_query_info[-1].replace('\n', '').replace('\r', '')
             #print("Inf1",DNS_query_info)
             Old_DNS_Answer=DNS_query_info[3].strip()
             New_DNS_Answer=DNS_Query(DNS_query_info[0].strip(),DNS_query_info[1].strip(),DNS_query_info[2].strip(),DNS_Query_Source_Address)
@@ -97,14 +97,15 @@ def main():
             #print("New",New_DNS_Answer)
             if str(New_DNS_Answer.strip()) != str(Old_DNS_Answer.strip()) :
                 Difference_Status+=1
-                DNS_query_info[3]=str(New_DNS_Answer)
+                DNS_query_info[3] = str(New_DNS_Answer)
                 #print("Inf3",DNS_query_info)
             Input_tmp_data.append(str("#".join(DNS_query_info)))
             Output_tmp_data.append("allow " + str(New_DNS_Answer) + "/32;")
             #print(New_DNS_Answer,Old_DNS_Answer,"Num =",Difference_Status)
+        Input_tmp_data.append('\n')
+        Output_tmp_data.append('deny all;\n')
         #
         if bool(Difference_Status) :
-            Output_tmp_data.append('deny all;\n')
             #print("O1",Input_tmp_data)
             #print("O2",Output_tmp_data)
             with open(str(Input_file_path), "w+") as w_file_output:
