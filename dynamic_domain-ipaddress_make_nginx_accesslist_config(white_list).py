@@ -7,7 +7,7 @@
 # Intro:  https://blog.starryvoid.com/archives/585.html
 # Build:  2021/03/23 Version 1.1.0
 #
-# Operating environment "Python3 dnspython"
+# Operating Environment "Python3.6+ dnspython"
 # Install Command "pip3 install dnspython"
 # About "dnspython" https://github.com/rthalley/dnspython https://dnspython.readthedocs.io/en/latest/
 # About "ngx_http_access_module" http://nginx.org/en/docs/http/ngx_http_access_module.html
@@ -17,14 +17,12 @@
 # Default Input File ./dns_read_list.txt
 # One line of the configuration file is like "www.google.com#8.8.8.8#A#216.58.197.196#Annotation"
 # You can use commands like this to generate sample files " echo -e 'domain1#dnsserver1#A#ipaddress_old1#Annotation1\ndomain2#dnsserver2#A#ipaddress_old2#Annotation2' "
-
 Input_file_path = "./dns_read_list.txt"
 
 # Default Output File ./nginx_access_whitelist.conf
 # One line of the output file is like "Allow 216.58.197.196/32;"
 # There is an extra rule at the end of the configuration file "deny all;"
 # And automatically reload the Nginx service "systemctl reload nginx.service"
-
 Output_file_path = "./nginx_access_whitelist.conf"
 Auto_Reload_Nginx_Command = "systemctl reload nginx.service"
 
@@ -40,8 +38,9 @@ DNS_Query_Source_Address = None
 # When there is a DNS query error, you can select other public servers to query 
 DNS_Query_Server_Expand = ['1.1.1.1','8.8.8.8','114.114.114.114']
 
-
 ### Config End ###
+
+### Script start ###
 
 import sys,dns.resolver,subprocess
 
@@ -113,6 +112,8 @@ def main():
     #
     except Exception as Error:
         print ('[Error]: Some errors have occurred, please check the configuration file.')
+
+### Script end ###
 
 if __name__ == "__main__":
     main()
